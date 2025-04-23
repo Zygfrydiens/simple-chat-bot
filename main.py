@@ -19,5 +19,20 @@ def test_chat():
     except Exception as e:
         print(f"An error occurred: {str(e)}")
 
+def chat_with_bot():
+    print("Welcome to the chat bot! Type 'quit' to exit.")
+    while True:
+        user_input = input("\nYou: ").strip()
+        if user_input.lower() == 'quit':
+            print("Goodbye!")
+            break
+        
+        try:
+            messages = [HumanMessage(content=user_input)]
+            response = llm.invoke(messages)
+            print("\nBot:", response.content)
+        except Exception as e:
+            print(f"\nAn error occurred: {str(e)}")
+
 if __name__ == "__main__":
-    test_chat() 
+    chat_with_bot() 
