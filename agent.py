@@ -1,7 +1,48 @@
+from abc import ABC, abstractmethod
 from langchain_community.chat_models import ChatOpenAI
 from langchain.schema import HumanMessage, SystemMessage, AIMessage
 
-class Agent:
+class AbstractAgent(ABC):
+    """Abstract base class defining the interface for all agents."""
+    
+    @abstractmethod
+    def __init__(self, personality=None, temperature=0.7, model_name="gpt-3.5-turbo"):
+        """
+        Initialize an AI agent with a specific personality.
+        
+        Args:
+            personality (str): The personality description for the agent
+            temperature (float): Creativity level of the responses (0.0 to 1.0)
+            model_name (str): The name of the LLM model to use
+        """
+        pass
+    
+    @abstractmethod
+    def generate_response(self, query):
+        """
+        Generate a response to a given query.
+        
+        Args:
+            query (str): The input query/message
+            
+        Returns:
+            str: The agent's response
+        """
+        pass
+    
+    @abstractmethod
+    def get_conversation_history(self):
+        """
+        Get the full conversation history.
+        
+        Returns:
+            str: Formatted conversation history
+        """
+        pass
+
+class BaseAgent(AbstractAgent):
+    """Base implementation of an AI agent with conversation memory."""
+    
     def __init__(self, personality=None, temperature=0.7, model_name="gpt-3.5-turbo"):
         """
         Initialize an AI agent with a specific personality.
